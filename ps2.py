@@ -254,11 +254,18 @@ class StandardRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
+        pos=self.getRobotPosition()
+        newPos=pos.getNewPosition(self.getRobotDirection(), self.speed)
+        room=self.room
+        if room.isPositionInRoom(newPos):
+            room.cleanTileAtPosition(newPos)
+            self.setRobotPosition(newPos)
+        else:
+            self.setRobotDirection(random.randint(0, 359))
 
 
 # Uncomment this line to see your implementation of StandardRobot in action!
-##testRobotMovement(StandardRobot, RectangularRoom)
+testRobotMovement(StandardRobot, RectangularRoom)
 
 
 # === Problem 4
