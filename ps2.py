@@ -82,7 +82,13 @@ class RectangularRoom(object):
         width: an integer > 0
         height: an integer > 0
         """
-        raise NotImplementedError
+        self.width=width
+        self.height=height
+        #Diccionario que relaciona los tuples baldosas con su estado de limpieza
+        self.tiles={}
+        for i in range(width):
+            for j in range(height):
+                self.tiles[(i, j)]='d'
     
     def cleanTileAtPosition(self, pos):
         """
@@ -92,7 +98,11 @@ class RectangularRoom(object):
 
         pos: a Position
         """
-        raise NotImplementedError
+        #Convertimos en int las coordenadas del robot
+        x=int(pos.getX())
+        y=int(pos.getY())
+        self.tiles[(x, y)]='c'
+            
 
     def isTileCleaned(self, m, n):
         """
@@ -104,7 +114,7 @@ class RectangularRoom(object):
         n: an integer
         returns: True if (m, n) is cleaned, False otherwise
         """
-        raise NotImplementedError
+        return self.tiles[(m, n)]=='c'
     
     def getNumTiles(self):
         """
@@ -112,7 +122,13 @@ class RectangularRoom(object):
 
         returns: an integer
         """
-        raise NotImplementedError
+        """
+        count=0
+        for i in self.tiles.keys():
+            count+=1
+        return count
+        """
+        return self.height*self.width
 
     def getNumCleanedTiles(self):
         """
@@ -120,7 +136,11 @@ class RectangularRoom(object):
 
         returns: an integer
         """
-        raise NotImplementedError
+        count=0
+        for i in self.tiles.keys():
+            if self.tiles[i]=='c':
+                count+=1
+        return count
 
     def getRandomPosition(self):
         """
@@ -128,7 +148,9 @@ class RectangularRoom(object):
 
         returns: a Position object.
         """
-        raise NotImplementedError
+        x=random.randint(0, self.width-1)
+        y=random.randint(0, self.height-1)
+        return Position(x, y)
 
     def isPositionInRoom(self, pos):
         """
@@ -137,7 +159,10 @@ class RectangularRoom(object):
         pos: a Position object.
         returns: True if pos is in the room, False otherwise.
         """
-        raise NotImplementedError
+        band=False
+        if 0<=pos.getX()<self.width and 0<=pos.getY()<self.height:
+            band=True
+        return band
 
 
 # === Problem 2
