@@ -326,7 +326,22 @@ class RandomWalkRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
+        pos=self.getRobotPosition()
+        newPos=pos.getNewPosition(self.getRobotDirection(), self.speed)
+        room=self.room
+        if room.isPositionInRoom(newPos):
+            room.cleanTileAtPosition(newPos)
+            self.setRobotPosition(newPos)
+            # The proposed new robots differ in that they change direction randomly after every time step, rather than just when they run into walls.
+        self.setRobotDirection(random.randint(0, 359))
+            
+# Uncomment this line to see how much your simulation takes on average
+print(runSimulation(1, 1.0, 5, 5, 1.0, 30, StandardRobot))
+print(runSimulation(1, 1.0, 5, 5, 1.0, 30, RandomWalkRobot))
+#print(runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot))
+#print(runSimulation(1, 1.0, 10, 10, 0.9, 30, StandardRobot))
+#print(runSimulation(1, 1.0, 20, 20, 1.0, 30, StandardRobot))
+#print(runSimulation(3, 1.0, 20, 20, 1.0, 30, StandardRobot))
 
 
 def showPlot1(title, x_label, y_label):
