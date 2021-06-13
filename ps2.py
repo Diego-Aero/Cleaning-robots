@@ -265,7 +265,7 @@ class StandardRobot(Robot):
 
 
 # Uncomment this line to see your implementation of StandardRobot in action!
-testRobotMovement(StandardRobot, RectangularRoom)
+#testRobotMovement(StandardRobot, RectangularRoom)
 
 
 # === Problem 4
@@ -287,10 +287,30 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
-    raise NotImplementedError
+
+    #Hay que inicializarlo para cada trial
+    #Podríamos establecer las mismas condiciones iniciales en cada trial (posicion de los robots)
+    time_steps=[]
+    for i in range(num_trials):
+        room=RectangularRoom(width, height)
+        robots=[]
+        time_step=0.0
+        for i in range(num_robots):
+            #Creamos una lista de robots
+            robots.append(robot_type(room, speed))
+            
+        while room.getNumCleanedTiles()/room.getNumTiles()<min_coverage:
+            #Mientras no se haya limpiado el porcentaje indicado
+            for r in robots:
+                #Vamos moviendo cada robot
+                r.updatePositionAndClean()
+            time_step+=1.0
+        time_steps.append(time_step)
+
+    return sum(time_steps)/num_trials
 
 # Uncomment this line to see how much your simulation takes on average
-##print(runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot))
+print(runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot))
 
 
 # === Problem 5
