@@ -265,8 +265,8 @@ class RandomWalkRobot(Robot):
         self.setRobotDirection(random.randint(0, 359))
             
 # Uncomment this line to see how much your simulation takes on average
-#print(runSimulation(1, 1.0, 5, 5, 1.0, 30, StandardRobot))
-#print(runSimulation(1, 1.0, 5, 5, 1.0, 30, RandomWalkRobot))
+print(runSimulation(1, 1.0, 5, 5, 1.0, 30, StandardRobot))
+print(runSimulation(1, 1.0, 5, 5, 1.0, 30, RandomWalkRobot))
 #print(runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot))
 #print(runSimulation(1, 1.0, 10, 10, 0.9, 30, StandardRobot))
 #print(runSimulation(1, 1.0, 20, 20, 1.0, 30, StandardRobot))
