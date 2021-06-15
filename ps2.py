@@ -65,105 +65,34 @@ class Position(object):
 
 
 # === Problem 1
+#También se podría hacer sin recurrir a un diccionario
 class RectangularRoom(object):
-    """
-    A RectangularRoom represents a rectangular region containing clean or dirty
-    tiles.
-
-    A room has a width and a height and contains (width * height) tiles. At any
-    particular time, each of these tiles is either clean or dirty.
-    """
     def __init__(self, width, height):
-        """
-        Initializes a rectangular room with the specified width and height.
+        self.width = width
+        self.height = height
+        self.cleanTiles = set()
 
-        Initially, no tiles in the room have been cleaned.
-
-        width: an integer > 0
-        height: an integer > 0
-        """
-        self.width=width
-        self.height=height
-        #Diccionario que relaciona los tuples baldosas con su estado de limpieza
-        self.tiles={}
-        for i in range(width):
-            for j in range(height):
-                self.tiles[(i, j)]='d'
-    
     def cleanTileAtPosition(self, pos):
-        """
-        Mark the tile under the position POS as cleaned.
-
-        Assumes that POS represents a valid position inside this room.
-
-        pos: a Position
-        """
-        #Convertimos en int las coordenadas del robot
-        x=int(pos.getX())
-        y=int(pos.getY())
-        self.tiles[(x, y)]='c'
-            
+        m = int(pos.x)
+        n = int(pos.y)
+        self.cleanTiles.add((m, n))
 
     def isTileCleaned(self, m, n):
-        """
-        Return True if the tile (m, n) has been cleaned.
+        return (m, n) in self.cleanTiles
 
-        Assumes that (m, n) represents a valid tile inside the room.
-
-        m: an integer
-        n: an integer
-        returns: True if (m, n) is cleaned, False otherwise
-        """
-        return self.tiles[(m, n)]=='c'
-    
     def getNumTiles(self):
-        """
-        Return the total number of tiles in the room.
-
-        returns: an integer
-        """
-        """
-        count=0
-        for i in self.tiles.keys():
-            count+=1
-        return count
-        """
-        return self.height*self.width
+        return self.width * self.height
 
     def getNumCleanedTiles(self):
-        """
-        Return the total number of clean tiles in the room.
-
-        returns: an integer
-        """
-        count=0
-        for i in self.tiles.keys():
-            if self.tiles[i]=='c':
-                count+=1
-        return count
+        return len(self.cleanTiles)
 
     def getRandomPosition(self):
-        """
-        Return a random position inside the room.
-
-        returns: a Position object.
-        """
-        x=random.randint(0, self.width-1)
-        y=random.randint(0, self.height-1)
+        x = self.width * random.random()
+        y = self.height * random.random()
         return Position(x, y)
 
     def isPositionInRoom(self, pos):
-        """
-        Return True if pos is inside the room.
-
-        pos: a Position object.
-        returns: True if pos is in the room, False otherwise.
-        """
-        band=False
-        if 0<=pos.getX()<self.width and 0<=pos.getY()<self.height:
-            band=True
-        return band
-
+        return 0 <= pos.x < self.width and 0 <= pos.y < self.height
 
 # === Problem 2
 class Robot(object):
